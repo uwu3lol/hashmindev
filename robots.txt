@@ -54,4 +54,4 @@ Allow: /
 User-agent: FacebookBot
 Allow: /
 
-Sitemap: https://hashmin.dev/sitemap.xml
+Sitemap: https://hashmindev.vercel.app/sitemap.xml
