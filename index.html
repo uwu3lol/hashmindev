@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muhammed Hashmin - Web Designer & Developer, Dubai</title>
+  <meta name="description" content="Muhammed Hashmin Valiyakath is a freelance digital designer, web developer, prompt engineer, and content creator based in Dubai, helping local businesses in UAE and Kerala build stronger online presence.">
+  <meta name="keywords" content="Muhammed Hashmin, web designer Dubai, freelance web developer UAE, digital designer Kerala, prompt engineer Dubai, portfolio website">
+  <meta name="author" content="Muhammed Hashmin Valiyakath">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#030303">
+  <link rel="canonical" href="https://hashmin.dev/">
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+  <link rel="alternate" type="text/markdown" href="/llms.txt" title="AI-readable site summary">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <meta property="og:title" content="Muhammed Hashmin - Digital Designer & Web Developer">
+  <meta property="og:description" content="I help local businesses own the internet, not just exist on it. Design, development, content, and AI workflows from Dubai to Kerala.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hashmin.dev/">
+  <meta property="og:image" content="https://hashmin.dev/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Muhammed Hashmin digital designer and web developer portfolio preview">
+  <meta property="og:locale" content="en_AE">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Muhammed Hashmin - Digital Designer & Web Developer">
+  <meta name="twitter:description" content="Design, development, content, and AI workflows for local businesses.">
+  <meta name="twitter:image" content="https://hashmin.dev/og-image.png">
+  <meta name="twitter:image:alt" content="Muhammed Hashmin digital designer and web developer portfolio preview">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://hashmin.dev/#person",
+        "name": "Muhammed Hashmin Valiyakath",
+        "jobTitle": "Digital Designer, Web Developer and Prompt Engineer",
+        "email": "hashminv1@gmail.com",
+        "telephone": "+971503391025",
+        "url": "https://hashmin.dev/",
+        "image": "https://hashmin.dev/og-image.png",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Dubai",
+          "addressCountry": "AE"
+        },
+        "knowsAbout": [
+          "Web Design",
+          "Web Development",
+          "UI/UX Design",
+          "Prompt Engineering",
+          "AI Workflows",
+          "AI and Automation Literacy",
+          "Systems Thinking",
+          "Proofreading",
+          "Digital Literacy",
+          "Content Creation",
+          "Digital Marketing"
+        ],
+        "sameAs": ["https://www.instagram.com/7a3hmy_/"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://hashmin.dev/#website",
+        "name": "Muhammed Hashmin Portfolio",
+        "url": "https://hashmin.dev/",
+        "author": { "@id": "https://hashmin.dev/#person" },
+        "publisher": { "@id": "https://hashmin.dev/#person" }
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://hashmin.dev/#service",
+        "name": "Muhammed Hashmin - Digital Design & Web Development",
+        "url": "https://hashmin.dev/",
+        "telephone": "+971503391025",
+        "image": "https://hashmin.dev/og-image.png",
+        "founder": { "@id": "https://hashmin.dev/#person" },
+        "provider": { "@id": "https://hashmin.dev/#person" },
+        "mainEntityOfPage": { "@id": "https://hashmin.dev/#website" },
+        "areaServed": [
+          { "@type": "Place", "name": "Dubai, UAE" },
+          { "@type": "Place", "name": "Kerala, India" },
+          { "@type": "Place", "name": "Remote" }
+        ],
+        "serviceType": ["Web Design", "Web Development", "Prompt Engineering", "Content Creation", "AI Automation"],
+        "email": "hashminv1@gmail.com"
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="#top" aria-label="Muhammed Hashmin portfolio home">
+      <span>MHV</span>
+      <small>Dubai / Remote</small>
+    </a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#profile">Profile</a>
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="header-link" href="https://api.whatsapp.com/send/?phone=971503391025" target="_blank" rel="noopener">Let's Talk</a>
+    <button class="menu-button" id="menuButton" type="button" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <a href="#profile">Profile</a>
+    <a href="#work">Work</a>
+    <a href="#services">Services</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+    <a href="https://api.whatsapp.com/send/?phone=971503391025" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+
+  <main id="top">
+    <section class="hero section-pad">
+      <div class="hero-meta reveal">
+        <span>Digital Designer</span>
+        <span>Web Developer</span>
+        <span>Prompt Engineer</span>
+      </div>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow reveal">Portfolio / 2026</p>
+          <h1 class="hero-title reveal">
+            Muhammed<br>
+            <span>Hashmin</span>
+          </h1>
+          <p class="hero-text reveal">
+            I build clean, conversion-focused digital identities for local businesses that are tired of looking average online.
+          </p>
+        </div>
+        <aside class="hero-panel reveal">
+          <div class="availability">
+            <span class="pulse"></span>
+            Available for freelance projects
+          </div>
+          <p>Based in Dubai. Building websites, content systems, and AI-assisted workflows for UAE, Kerala, and remote businesses.</p>
+          <div class="hero-actions">
+            <a class="button button-solid" href="#work">View Work</a>
+            <a class="button button-ghost" href="mailto:hashminv1@gmail.com">Email Me</a>
+          </div>
+        </aside>
+      </div>
+      <div class="hero-bottom reveal">
+        <span>Scroll</span>
+        <div></div>
+        <span>Selected direction inspired by editorial studio portfolios</span>
+      </div>
+    </section>
+
+    <section class="ticker" aria-label="Capabilities">
+      <div class="ticker-track">
+        <span>Design</span><span>Development</span><span>AI Agents</span><span>Proofreading</span><span>Systems Thinking</span><span>Digital Literacy</span>
+        <span>Automation</span><span>n8n</span><span>Content</span><span>Brand Systems</span><span>Local SEO</span><span>AI Workflows</span>
+        <span>Design</span><span>Development</span><span>AI Agents</span><span>Proofreading</span><span>Systems Thinking</span><span>Digital Literacy</span>
+        <span>Automation</span><span>n8n</span><span>Content</span><span>Brand Systems</span><span>Local SEO</span><span>AI Workflows</span>
+      </div>
+    </section>
+
+    <section class="section-pad profile" id="profile">
+      <div class="section-label reveal">Profile</div>
+      <div class="profile-layout">
+        <h2 class="section-title reveal">Not another template guy.</h2>
+        <div class="profile-copy reveal">
+          <p>
+            I am Hashmin, a 17-year-old digital designer and developer balancing Grade 12 commerce with real client work. The work started with curiosity, then turned into websites, content, and systems for businesses that needed sharper digital presence.
+          </p>
+          <p>
+            My thing is simple: make local businesses look serious online. Fast pages, direct messaging, mobile-first layouts, better copy, and practical AI workflows that save time instead of showing off.
+          </p>
+        </div>
+      </div>
+      <div class="stats-grid reveal">
+        <div><strong data-count="20">0</strong><span>Companies served</span></div>
+        <div><strong data-count="50">0</strong><span>Projects delivered</span></div>
+        <div><strong data-count="2">0</strong><span>Countries</span></div>
+        <div><strong>24/7</strong><span>Build mode</span></div>
+      </div>
+    </section>
+
+    <section class="section-pad work" id="work">
+      <div class="work-head reveal">
+        <div>
+          <div class="section-label">Selected Work</div>
+          <h2 class="section-title">Projects with local-business pressure.</h2>
+        </div>
+        <p>Names can stay private. DM me to see some work, screens, and examples from builds across UAE, Kerala, and remote clients.</p>
+      </div>
+
+      <div class="project-list">
+        <article class="project-row reveal" data-preview="01">
+          <a href="#contact" aria-label="Discuss a restaurant website project">
+            <span class="project-index">01</span>
+            <span class="project-name">Restaurant Redesign / Dubai</span>
+            <span class="project-type">Website, UX, Copy</span>
+            <span class="project-arrow">DM</span>
+          </a>
+        </article>
+        <article class="project-row reveal" data-preview="02">
+          <a href="#contact" aria-label="Discuss a Kerala brand and web project">
+            <span class="project-index">02</span>
+            <span class="project-name">Local Brand System / Kerala</span>
+            <span class="project-type">Brand, Web, Social</span>
+            <span class="project-arrow">DM</span>
+          </a>
+        </article>
+        <article class="project-row reveal" data-preview="03">
+          <a href="#contact" aria-label="Discuss a UAE content project">
+            <span class="project-index">03</span>
+            <span class="project-name">Content Engine / UAE</span>
+            <span class="project-type">Content, AI, Design</span>
+            <span class="project-arrow">DM</span>
+          </a>
+        </article>
+        <article class="project-row reveal" data-preview="04">
+          <a href="#contact" aria-label="Discuss a new business website project">
+            <span class="project-index">04</span>
+            <span class="project-name">New Business Launch / Remote</span>
+            <span class="project-type">Landing Page, SEO</span>
+            <span class="project-arrow">DM</span>
+          </a>
+        </article>
+      </div>
+      <a class="work-dm reveal" href="https://api.whatsapp.com/send/?phone=971503391025&text=DM%20me%20to%20see%20some%20work%20and%20project%20examples." target="_blank" rel="noopener">
+        DM me to see some work
+      </a>
+      <div class="preview-card" id="previewCard" aria-hidden="true">01</div>
+    </section>
+
+    <section class="section-pad services" id="services">
+      <div class="section-label reveal">Services</div>
+      <div class="service-grid">
+        <article class="service-card reveal">
+          <span>01</span>
+          <h3>Websites that feel premium and load fast</h3>
+          <p>Portfolio sites, business sites, landing pages, redesigns, and mobile-first interfaces built around actual customer action.</p>
+        </article>
+        <article class="service-card reveal">
+          <span>02</span>
+          <h3>Design systems for businesses that need trust</h3>
+          <p>Visual direction, typography, colors, page structure, social creatives, and brand consistency that does not look like a random Canva pile.</p>
+        </article>
+        <article class="service-card reveal">
+          <span>03</span>
+          <h3>AI workflows that speed up the boring parts</h3>
+          <p>Prompt systems for content, research, customer replies, marketing ideas, and internal workflows that make small teams move bigger.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-pad skills" id="skills">
+      <div class="skills-head reveal">
+        <p class="section-label">Skills</p>
+        <h2 class="section-title">More than just pixels.</h2>
+      </div>
+      <div class="skills-grid reveal">
+        <span>Web Design</span>
+        <span>Web Development</span>
+        <span>Prompt Engineering</span>
+        <span>Proofreading</span>
+        <span>Systems Thinking</span>
+        <span>AI and Automation Literacy</span>
+        <span>AI Agents: paid and free tools</span>
+        <span>n8n Workflows</span>
+        <span>Digital Literacy</span>
+        <span>Content Systems</span>
+        <span>Local SEO</span>
+        <span>Brand Direction</span>
+      </div>
+    </section>
+
+    <section class="section-pad manifesto">
+      <p class="section-label reveal">Manifesto</p>
+      <blockquote class="reveal">
+        Most local businesses do not need more decoration. They need clarity, speed, trust, and a site that makes the next step obvious.
+      </blockquote>
+    </section>
+
+    <section class="section-pad contact" id="contact">
+      <div class="contact-copy reveal">
+        <p class="section-label">Contact</p>
+        <h2 class="section-title">Have a business that deserves better online?</h2>
+        <p>Send the project, the problem, or even a messy idea. I will help shape it into something that can actually ship.</p>
+      </div>
+      <div class="contact-panel reveal">
+        <a href="https://api.whatsapp.com/send/?phone=971503391025" target="_blank" rel="noopener">
+          <span>WhatsApp</span>
+          <strong>+971 50 339 1025</strong>
+        </a>
+        <a href="mailto:hashminv1@gmail.com">
+          <span>Email</span>
+          <strong>hashminv1@gmail.com</strong>
+        </a>
+        <a href="https://www.instagram.com/7a3hmy_/" target="_blank" rel="noopener">
+          <span>Instagram</span>
+          <strong>@7a3hmy_</strong>
+        </a>
+      </div>
+      <form class="contact-form reveal" id="contactForm">
+        <label>
+          <span>Name</span>
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <label>
+          <span>Message</span>
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+        <button class="button button-solid" type="submit">Draft WhatsApp Message</button>
+        <p class="form-note" id="formNote">The form opens WhatsApp with your message. No backend needed.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Muhammed Hashmin Valiyakath</span>
+    <span>Dubai -> Remote</span>
+    <span>2026</span>
+  </footer>
+</body>
+</html>
