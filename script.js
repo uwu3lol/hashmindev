@@ -92,7 +92,8 @@ function initProjectPreview() {
 
   qsa(".project-row").forEach((row) => {
     row.addEventListener("pointerenter", () => {
-      previewCard.textContent = row.dataset.preview || "00";
+      const number = previewCard.querySelector(".preview-card-number");
+      if (number) number.textContent = row.dataset.preview || "00";
       previewCard.classList.add("is-visible");
     });
     row.addEventListener("pointerleave", () => {

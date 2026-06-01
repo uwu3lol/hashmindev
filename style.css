@@ -444,6 +444,24 @@ main,
   line-height: 0.9;
 }
 
+.profile-title {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(14px, 2vw, 26px);
+}
+
+.profile-title span {
+  min-width: 0;
+}
+
+.profile-title img {
+  width: clamp(58px, 9vw, 116px);
+  flex: 0 0 auto;
+  margin-bottom: 0.05em;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
+  transform: rotate(-4deg);
+}
+
 .profile-copy {
   font-size: clamp(17px, 2vw, 22px);
 }
@@ -559,6 +577,22 @@ main,
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.18s ease, transform 0.18s ease;
+  overflow: hidden;
+}
+
+.preview-card img {
+  position: absolute;
+  right: -14px;
+  bottom: -10px;
+  width: 64%;
+  max-width: 132px;
+  opacity: 0.72;
+  filter: saturate(0.9) contrast(1.04) drop-shadow(0 18px 22px rgba(0, 0, 0, 0.46));
+}
+
+.preview-card-number {
+  position: relative;
+  z-index: 1;
 }
 
 .preview-card.is-visible {
@@ -635,7 +669,7 @@ main,
   overflow: hidden;
 }
 
-.manifesto blockquote {
+.manifesto-quote {
   position: relative;
   max-width: 1120px;
   margin: 28px 0 0;
@@ -644,21 +678,22 @@ main,
   font-weight: 800;
   letter-spacing: -0.08em;
   line-height: 0.89;
-  transition: color 0.28s ease, text-shadow 0.28s ease, transform 0.28s ease;
+  color: var(--paper);
 }
 
-.manifesto blockquote::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--acid), var(--hot), transparent);
-  opacity: 0;
-  transform: scaleX(0) translateY(-50%);
-  transform-origin: left;
-  transition: opacity 0.24s ease, transform 0.42s ease;
+.manifesto-lead,
+.manifesto-tail {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.manifesto-tail {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.manifesto-tail span {
+  display: inline-block;
 }
 
 .contact {
@@ -868,18 +903,20 @@ main,
     animation-delay: 0.08s;
   }
 
-  .manifesto:hover blockquote {
-    color: transparent;
-    background: linear-gradient(100deg, var(--paper), var(--acid) 42%, var(--hot) 62%, var(--steel));
-    -webkit-background-clip: text;
-    background-clip: text;
-    text-shadow: 0 0 34px rgba(214, 255, 54, 0.12);
-    transform: translateX(10px);
+  .profile-title:hover img {
+    animation: stickerPop 0.7s ease both;
   }
 
-  .manifesto:hover blockquote::after {
-    opacity: 0.85;
-    transform: scaleX(1) translateY(-50%);
+  .manifesto:hover .manifesto-lead {
+    animation: manifestoShow 3.6s ease both;
+  }
+
+  .manifesto:hover .manifesto-tail {
+    animation: manifestoReveal 3.6s ease both;
+  }
+
+  .manifesto:hover .manifesto-tail span {
+    animation: manifestoSlide 3.6s ease both;
   }
 }
 
@@ -887,6 +924,33 @@ main,
   0% { clip-path: inset(0 100% 0 0); transform: translateX(-8px); }
   45% { clip-path: inset(0 0 0 0); }
   100% { clip-path: inset(0 0 0 100%); transform: translateX(8px); }
+}
+
+@keyframes stickerPop {
+  0% { transform: rotate(-4deg) scale(1); }
+  42% { transform: rotate(4deg) scale(1.08); }
+  100% { transform: rotate(-2deg) scale(1.02); }
+}
+
+@keyframes manifestoShow {
+  0% { opacity: 0.2; }
+  18% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes manifestoReveal {
+  0% { opacity: 0; max-width: 0; }
+  18% { opacity: 1; max-width: 0; }
+  42% { max-width: 1120px; }
+  100% { opacity: 1; max-width: 1120px; }
+}
+
+@keyframes manifestoSlide {
+  0% { transform: translateX(-110%); }
+  18% { transform: translateX(-110%); }
+  42% { transform: translateX(0); }
+  100% { transform: translateX(0); }
 }
 
 @media (max-width: 640px) {
@@ -907,6 +971,20 @@ main,
     font-size: clamp(42px, 14.5vw, 66px);
     letter-spacing: -0.065em;
     line-height: 0.9;
+  }
+
+  .profile-title {
+    align-items: flex-start;
+  }
+
+  .profile-title img {
+    width: clamp(54px, 18vw, 78px);
+    margin-top: 4px;
+  }
+
+  .manifesto-quote {
+    font-size: clamp(36px, 11vw, 58px);
+    letter-spacing: -0.065em;
   }
 
   .hero-bottom {
