@@ -10,12 +10,32 @@ const contactForm = qs("#contactForm");
 const canvas = qs("#scene");
 const main = qs("main");
 const footer = qs(".site-footer");
+const navLinks = qsa('.desktop-nav a[href^="#"]');
 
 const phone = "971503391025";
 const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function setHeaderState() {
   header?.classList.toggle("is-scrolled", window.scrollY > 24);
+}
+
+function initActiveNav() {
+  if (!navLinks.length) return;
+
+  const sections = navLinks
+    .map((link) => qs(link.getAttribute("href")))
+    .filter(Boolean);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      navLinks.forEach((link) => {
+        link.classList.toggle("is-active", link.getAttribute("href") === `#${entry.target.id}`);
+      });
+    });
+  }, { threshold: 0.32, rootMargin: "-18% 0px -54%" });
+
+  sections.forEach((section) => observer.observe(section));
 }
 
 function toggleMenu(force) {
@@ -109,7 +129,7 @@ function initCounters() {
       requestAnimationFrame(tick);
       observer.unobserve(el);
     });
-  }, { threshold: 0.45 });
+  }, { threshold: 0.2, rootMargin: "0px 0px -80px" });
 
   counters.forEach((counter) => observer.observe(counter));
 }
@@ -146,8 +166,10 @@ function initContactForm() {
     const data = new FormData(contactForm);
     const name = data.get("name") || "";
     const email = data.get("email") || "";
+    const projectType = data.get("projectType") || "";
+    const budget = data.get("budget") || "";
     const message = data.get("message") || "";
-    const text = `Hello Hashmin, my name is ${name}. Email: ${email}. Project: ${message}`;
+    const text = `Hello Hashmin, my name is ${name}. Email: ${email}. Project type: ${projectType}. Budget: ${budget}. Project: ${message}`;
     const whatsappUrl = `https://api.whatsapp.com/send/?phone=${phone}&text=${encodeURIComponent(text)}`;
     const link = document.createElement("a");
     link.href = whatsappUrl;
@@ -274,6 +296,7 @@ window.addEventListener("scroll", setHeaderState, { passive: true });
 document.addEventListener("DOMContentLoaded", () => {
   setHeaderState();
   initMenu();
+  initActiveNav();
   initCursor();
   initReveal();
   initCounters();
