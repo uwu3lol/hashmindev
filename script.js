@@ -8,8 +8,11 @@ const cursor = qs("#cursor");
 const previewCard = qs("#previewCard");
 const contactForm = qs("#contactForm");
 const canvas = qs("#scene");
+const main = qs("main");
+const footer = qs(".site-footer");
 
 const phone = "971503391025";
+const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function setHeaderState() {
   header?.classList.toggle("is-scrolled", window.scrollY > 24);
@@ -17,11 +20,20 @@ function setHeaderState() {
 
 function toggleMenu(force) {
   const isOpen = typeof force === "boolean" ? force : !mobileMenu.classList.contains("is-open");
+  const wasOpen = mobileMenu.classList.contains("is-open");
   mobileMenu.classList.toggle("is-open", isOpen);
   menuButton.classList.toggle("is-open", isOpen);
   menuButton.setAttribute("aria-expanded", String(isOpen));
   mobileMenu.setAttribute("aria-hidden", String(!isOpen));
   document.body.classList.toggle("menu-open", isOpen);
+  main?.toggleAttribute("inert", isOpen);
+  footer?.toggleAttribute("inert", isOpen);
+
+  if (isOpen) {
+    qs("a", mobileMenu)?.focus();
+  } else if (wasOpen) {
+    menuButton?.focus();
+  }
 }
 
 function initMenu() {
@@ -29,6 +41,20 @@ function initMenu() {
   qsa(".mobile-menu a").forEach((link) => link.addEventListener("click", () => toggleMenu(false)));
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape") toggleMenu(false);
+    if (event.key !== "Tab" || !mobileMenu?.classList.contains("is-open")) return;
+
+    const focusable = qsa("a, button", mobileMenu);
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!first || !last) return;
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   });
 }
 
@@ -47,6 +73,7 @@ function initCursor() {
 }
 
 function initReveal() {
+  const threshold = window.innerWidth < 700 ? 0.1 : 0.18;
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -54,7 +81,7 @@ function initReveal() {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.18, rootMargin: "0px 0px -40px" });
+  }, { threshold, rootMargin: "0px 0px -40px" });
 
   qsa(".reveal").forEach((el, index) => {
     el.style.transitionDelay = `${Math.min(index % 5, 4) * 60}ms`;
@@ -108,7 +135,7 @@ function initSmoothAnchors() {
       const target = qs(link.getAttribute("href"));
       if (!target) return;
       event.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      target.scrollIntoView({ behavior: reduceMotionQuery.matches ? "auto" : "smooth", block: "start" });
     });
   });
 }
@@ -121,18 +148,30 @@ function initContactForm() {
     const email = data.get("email") || "";
     const message = data.get("message") || "";
     const text = `Hello Hashmin, my name is ${name}. Email: ${email}. Project: ${message}`;
-    window.location.href = `https://api.whatsapp.com/send/?phone=${phone}&text=${encodeURIComponent(text)}`;
+    const whatsappUrl = `https://api.whatsapp.com/send/?phone=${phone}&text=${encodeURIComponent(text)}`;
+    const link = document.createElement("a");
+    link.href = whatsappUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    document.body.append(link);
+    link.click();
+    link.remove();
   });
 }
 
 function initCanvasScene() {
-  if (!canvas) return;
+  if (!canvas || reduceMotionQuery.matches) {
+    canvas?.remove();
+    return;
+  }
   const ctx = canvas.getContext("2d");
   const pointer = { x: 0.5, y: 0.5 };
   const particles = [];
   let width = 0;
   let height = 0;
   let dpr = 1;
+  let animationId = 0;
+  let resizeId = 0;
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -145,7 +184,7 @@ function initCanvasScene() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     particles.length = 0;
-    const count = width < 700 ? 54 : 86;
+    const count = width < 700 ? 46 : 72;
     for (let i = 0; i < count; i += 1) {
       particles.push({
         x: Math.random() * width,
@@ -194,28 +233,40 @@ function initCanvasScene() {
         const dx = particle.x - other.x;
         const dy = particle.y - other.y;
         const distance = Math.hypot(dx, dy);
-        if (distance < 132) {
+        const connectionDistance = width < 700 ? 80 : 108;
+        if (distance < connectionDistance) {
           ctx.beginPath();
           ctx.moveTo(particle.x, particle.y);
           ctx.lineTo(other.x, other.y);
-          ctx.strokeStyle = `rgba(244,240,232,${0.08 * (1 - distance / 132)})`;
+          ctx.strokeStyle = `rgba(244,240,232,${0.08 * (1 - distance / connectionDistance)})`;
           ctx.lineWidth = 1;
           ctx.stroke();
         }
       }
     });
 
-    requestAnimationFrame(draw);
+    animationId = requestAnimationFrame(draw);
   }
 
-  window.addEventListener("resize", resize);
+  window.addEventListener("resize", () => {
+    window.clearTimeout(resizeId);
+    resizeId = window.setTimeout(resize, 120);
+  });
   window.addEventListener("pointermove", (event) => {
     pointer.x = event.clientX / width;
     pointer.y = event.clientY / height;
   }, { passive: true });
 
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      cancelAnimationFrame(animationId);
+    } else {
+      animationId = requestAnimationFrame(draw);
+    }
+  });
+
   resize();
-  requestAnimationFrame(draw);
+  animationId = requestAnimationFrame(draw);
 }
 
 window.addEventListener("scroll", setHeaderState, { passive: true });
