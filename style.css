@@ -10,6 +10,7 @@
   --panel: rgba(255, 255, 255, 0.045);
   --font-display: "Syne", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
+  --page-gutter: clamp(24px, 5vw, 72px);
 }
 
 * {
@@ -111,7 +112,7 @@ canvas {
   grid-template-columns: 1fr auto auto;
   align-items: center;
   gap: 28px;
-  padding: 22px clamp(18px, 4vw, 60px);
+  padding: 22px var(--page-gutter);
   transition: background 0.25s ease, border-color 0.25s ease, padding 0.25s ease;
 }
 
@@ -229,14 +230,13 @@ main,
 }
 
 .section-pad {
-  padding: clamp(86px, 12vw, 170px) clamp(18px, 4vw, 60px);
+  padding: clamp(96px, 14vw, 190px) var(--page-gutter);
 }
 
 .hero {
-  min-height: 100svh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding-top: 116px;
 }
 
@@ -267,7 +267,7 @@ main,
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
   gap: clamp(28px, 6vw, 88px);
-  align-items: end;
+  align-items: start;
   width: 100%;
 }
 
@@ -277,7 +277,7 @@ main,
   font-size: clamp(52px, 10.2vw, 148px);
   font-weight: 800;
   letter-spacing: -0.075em;
-  line-height: 0.84;
+  line-height: 1;
   text-transform: uppercase;
   max-width: 100%;
 }
@@ -307,7 +307,7 @@ main,
   color: rgba(244, 240, 232, 0.72);
   font-size: 0.46em;
   letter-spacing: 0.02em;
-  line-height: 1;
+  line-height: 1.05;
 }
 
 .hero-text {
@@ -424,13 +424,15 @@ main,
 
 .ticker {
   overflow: hidden;
+  padding: clamp(18px, 3vw, 36px) 0;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  background: rgba(3, 3, 3, 0.72);
+  background: rgba(3, 3, 3, 0.82);
 }
 
 .ticker-track {
   display: flex;
+  align-items: center;
   width: max-content;
   animation: ticker 24s linear infinite;
 }
@@ -465,8 +467,8 @@ main,
   font-family: var(--font-display);
   font-size: clamp(40px, 7.2vw, 106px);
   font-weight: 800;
-  letter-spacing: -0.08em;
-  line-height: 0.9;
+  letter-spacing: -0.065em;
+  line-height: 1.02;
 }
 
 .profile-title {
@@ -536,12 +538,12 @@ main,
 
 .work {
   position: relative;
-  overflow: hidden;
+  overflow: clip;
   border-top: 1px solid var(--line);
 }
 
 .work-head {
-  margin-bottom: 50px;
+  margin-bottom: clamp(64px, 8vw, 108px);
 }
 
 .proof-grid {
@@ -632,6 +634,7 @@ main,
 
 .project-list {
   border-top: 1px solid var(--line);
+  margin-inline: 0;
 }
 
 .work-dm {
@@ -650,7 +653,7 @@ main,
   grid-template-columns: 72px minmax(0, 1fr) minmax(160px, 280px) 70px;
   gap: 22px;
   align-items: center;
-  padding: clamp(22px, 4vw, 46px) 0;
+  padding: clamp(28px, 4.6vw, 56px) clamp(4px, 1.2vw, 16px);
   border-bottom: 1px solid var(--line);
   transition: color 0.2s ease, padding-left 0.2s ease;
 }
@@ -668,8 +671,8 @@ main,
   font-family: var(--font-display);
   font-size: clamp(30px, 5.8vw, 86px);
   font-weight: 800;
-  letter-spacing: -0.075em;
-  line-height: 0.88;
+  letter-spacing: -0.06em;
+  line-height: 1.02;
 }
 
 .preview-card {
@@ -957,7 +960,7 @@ main,
   display: flex;
   justify-content: space-between;
   gap: 18px;
-  padding: 26px clamp(18px, 4vw, 60px);
+  padding: 26px var(--page-gutter);
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 12px;
@@ -1035,6 +1038,42 @@ main,
 
   .preview-card {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid,
+  .service-grid,
+  .proof-grid,
+  .testimonial-grid,
+  .contact-form {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid div {
+    min-height: 136px;
+  }
+
+  .service-card {
+    min-height: 280px;
+  }
+}
+
+@media (max-height: 560px) and (orientation: landscape) {
+  .section-pad {
+    padding-top: clamp(56px, 10vw, 86px);
+    padding-bottom: clamp(56px, 10vw, 86px);
+  }
+
+  .hero {
+    min-height: auto;
+    justify-content: flex-start;
+    gap: 34px;
+    padding-top: 88px;
+  }
+
+  .hero-title {
+    line-height: 0.98;
   }
 }
 
@@ -1162,9 +1201,9 @@ main,
   }
 
   .hero-title {
-    font-size: clamp(42px, 14.5vw, 66px);
+    font-size: clamp(44px, 13vw, 66px);
     letter-spacing: -0.065em;
-    line-height: 1.05;
+    line-height: 1.08;
   }
 
   .profile-title {
@@ -1180,31 +1219,13 @@ main,
   }
 
   .manifesto-quote {
-    font-size: clamp(36px, 11vw, 58px);
+    font-size: clamp(38px, 10vw, 58px);
     letter-spacing: -0.065em;
+    line-height: 1.04;
   }
 
   .hero-bottom {
     grid-template-columns: auto 1fr;
-  }
-
-  .service-grid,
-  .contact-form,
-  .proof-grid,
-  .testimonial-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .stats-grid div {
-    min-height: 136px;
-  }
-
-  .service-card {
-    min-height: 280px;
   }
 
   .project-row a {
@@ -1213,6 +1234,7 @@ main,
 
   .project-name {
     font-size: clamp(28px, 11vw, 54px);
+    line-height: 1.02;
   }
 
   .site-footer {

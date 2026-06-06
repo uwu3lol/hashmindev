@@ -193,9 +193,11 @@ function initCanvasScene() {
   let height = 0;
   let dpr = 1;
   let animationId = 0;
-  let resizeId = 0;
+  let resizeRaf = 0;
+  const orientationQuery = window.matchMedia("(orientation: portrait)");
 
   function resize() {
+    resizeRaf = 0;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     width = window.innerWidth;
     height = window.innerHeight;
@@ -217,6 +219,11 @@ function initCanvasScene() {
         hue: Math.random() > 0.58 ? "214,255,54" : Math.random() > 0.5 ? "255,63,110" : "143,163,255"
       });
     }
+  }
+
+  function requestResize() {
+    if (resizeRaf) return;
+    resizeRaf = requestAnimationFrame(resize);
   }
 
   function draw(time) {
@@ -270,10 +277,8 @@ function initCanvasScene() {
     animationId = requestAnimationFrame(draw);
   }
 
-  window.addEventListener("resize", () => {
-    window.clearTimeout(resizeId);
-    resizeId = window.setTimeout(resize, 120);
-  });
+  window.addEventListener("resize", requestResize, { passive: true });
+  orientationQuery.addEventListener("change", resize);
   window.addEventListener("pointermove", (event) => {
     pointer.x = event.clientX / width;
     pointer.y = event.clientY / height;
