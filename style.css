@@ -265,16 +265,24 @@ main,
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+  grid-template-columns: 1fr;
   gap: clamp(28px, 6vw, 88px);
   align-items: start;
   width: 100%;
 }
 
+@supports (grid-template-columns: minmax(0, auto)) {
+  @media (min-width: 900px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+    }
+  }
+}
+
 .hero-title {
   margin: 18px 0 0;
   font-family: var(--font-display);
-  font-size: clamp(52px, 10.2vw, 148px);
+  font-size: clamp(40px, 8vw, 148px);
   font-weight: 800;
   letter-spacing: -0.075em;
   line-height: 1;
@@ -457,15 +465,25 @@ main,
 .work-head,
 .contact {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.75fr);
+  grid-template-columns: 1fr;
   gap: clamp(36px, 8vw, 120px);
   align-items: start;
+}
+
+@supports (grid-template-columns: minmax(0, auto)) {
+  @media (min-width: 880px) {
+    .profile-layout,
+    .work-head,
+    .contact {
+      grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.75fr);
+    }
+  }
 }
 
 .section-title {
   margin: 16px 0 0;
   font-family: var(--font-display);
-  font-size: clamp(40px, 7.2vw, 106px);
+  font-size: clamp(36px, 6.5vw, 106px);
   font-weight: 800;
   letter-spacing: -0.065em;
   line-height: 1.02;
@@ -502,7 +520,7 @@ main,
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1px;
   margin-top: clamp(48px, 7vw, 92px);
   border: 1px solid var(--line);
@@ -548,7 +566,7 @@ main,
 
 .proof-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1px;
   margin-bottom: 42px;
   border: 1px solid var(--line);
@@ -650,12 +668,21 @@ main,
 
 .project-row a {
   display: grid;
-  grid-template-columns: 72px minmax(0, 1fr) minmax(160px, 280px) 70px;
+  grid-template-columns: 1fr;
   gap: 22px;
-  align-items: center;
+  align-items: start;
   padding: clamp(28px, 4.6vw, 56px) clamp(4px, 1.2vw, 16px);
   border-bottom: 1px solid var(--line);
   transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+@supports (grid-template-columns: minmax(0, auto)) {
+  @media (min-width: 768px) {
+    .project-row a {
+      grid-template-columns: 72px minmax(0, 1fr) minmax(160px, 280px) 70px;
+      align-items: center;
+    }
+  }
 }
 
 .project-index,
@@ -669,7 +696,7 @@ main,
 
 .project-name {
   font-family: var(--font-display);
-  font-size: clamp(30px, 5.8vw, 86px);
+  font-size: clamp(24px, 5vw, 86px);
   font-weight: 800;
   letter-spacing: -0.06em;
   line-height: 1.02;
@@ -723,7 +750,7 @@ main,
 
 .service-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1px;
   margin-top: 32px;
   background: var(--line);
@@ -761,7 +788,7 @@ main,
 
 .testimonial-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 1px;
   margin-top: 32px;
   border: 1px solid var(--line);
@@ -787,9 +814,18 @@ main,
 
 .skills-head {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(300px, 1fr);
+  grid-template-columns: 1fr;
   gap: clamp(32px, 7vw, 110px);
-  align-items: end;
+  align-items: start;
+}
+
+@supports (grid-template-columns: minmax(0, auto)) {
+  @media (min-width: 900px) {
+    .skills-head {
+      grid-template-columns: minmax(0, 0.8fr) minmax(300px, 1fr);
+      align-items: end;
+    }
+  }
 }
 
 .skills-head .section-title {
@@ -1008,27 +1044,8 @@ main,
     display: grid;
   }
 
-  .hero-grid,
-  .profile-layout,
-  .work-head,
-  .skills-head,
-  .contact {
-    grid-template-columns: 1fr;
-  }
-
   .hero-panel {
     max-width: 560px;
-  }
-
-  .stats-grid,
-  .service-grid,
-  .proof-grid,
-  .testimonial-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .project-row a {
-    grid-template-columns: 48px 1fr;
   }
 
   .project-type,
@@ -1042,20 +1059,16 @@ main,
 }
 
 @media (max-width: 768px) {
-  .stats-grid,
-  .service-grid,
-  .proof-grid,
-  .testimonial-grid,
-  .contact-form {
-    grid-template-columns: 1fr;
-  }
-
   .stats-grid div {
     min-height: 136px;
   }
 
   .service-card {
     min-height: 280px;
+  }
+
+  .contact-form {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1200,12 +1213,6 @@ main,
     padding-top: 96px;
   }
 
-  .hero-title {
-    font-size: clamp(44px, 13vw, 66px);
-    letter-spacing: -0.065em;
-    line-height: 1.08;
-  }
-
   .profile-title {
     padding-right: 0;
   }
@@ -1218,23 +1225,12 @@ main,
     margin-top: 12px;
   }
 
-  .manifesto-quote {
-    font-size: clamp(38px, 10vw, 58px);
-    letter-spacing: -0.065em;
-    line-height: 1.04;
-  }
-
   .hero-bottom {
     grid-template-columns: auto 1fr;
   }
 
   .project-row a {
     gap: 12px;
-  }
-
-  .project-name {
-    font-size: clamp(28px, 11vw, 54px);
-    line-height: 1.02;
   }
 
   .site-footer {
