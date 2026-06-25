@@ -298,8 +298,88 @@ function initCanvasScene() {
 
 window.addEventListener("scroll", setHeaderState, { passive: true });
 
+const STORAGE_KEY = "portfolio-language";
+const DEFAULT_LANG = "en";
+
+function initLanguageToggle() {
+  const languageToggle = qs("#languageToggle");
+  if (!languageToggle) return;
+
+  // Get saved language or use default
+  const savedLang = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
+  
+  // Apply language on load
+  applyLanguage(savedLang);
+
+  // Toggle on button click
+  languageToggle.addEventListener("click", () => {
+    const currentLang = document.documentElement.lang === "ar" ? "ar" : "en";
+    const newLang = currentLang === "en" ? "ar" : "en";
+    localStorage.setItem(STORAGE_KEY, newLang);
+    applyLanguage(newLang);
+  });
+}
+
+function applyLanguage(lang) {
+  const isArabic = lang === "ar";
+  const dataAttr = isArabic ? "data-ar" : "data-en";
+  const direction = isArabic ? "rtl" : "ltr";
+  
+  // Set HTML lang and direction
+  document.documentElement.lang = lang;
+  document.documentElement.dir = direction;
+  document.body.dir = direction;
+
+  // Update language toggle button
+  const languageToggle = qs("#languageToggle");
+  if (languageToggle) {
+    languageToggle.classList.toggle("is-arabic", isArabic);
+    languageToggle.textContent = isArabic ? "AR" : "EN";
+  }
+
+  // Update all elements with data-en and data-ar attributes
+  qsa("[data-en]").forEach((el) => {
+    const text = el.getAttribute(dataAttr) || el.getAttribute("data-en");
+    
+    // For elements with only text content (no child elements with data attributes)
+    if (el.children.length === 0 || (el.children.length === 1 && el.children[0].tagName === "SPAN" && !el.children[0].hasAttribute("data-en"))) {
+      el.textContent = text;
+    } else if (!el.querySelector("[data-en]")) {
+      // Replace text content but preserve HTML structure
+      Array.from(el.childNodes).forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          node.textContent = text;
+        }
+      });
+    }
+  });
+
+  // Update ticker track (special handling)
+  const tickerTrack = qs(".ticker-track");
+  if (tickerTrack) {
+    const items = isArabic 
+      ? tickerTrack.getAttribute("data-ar-text")?.split("|") || []
+      : tickerTrack.getAttribute("data-en-text")?.split("|") || [];
+    
+    if (items.length > 0) {
+      const spans = qsa("span", tickerTrack);
+      spans.forEach((span, idx) => {
+        span.textContent = items[idx % items.length];
+      });
+    }
+  }
+
+  // Trigger layout recalculation for RTL
+  if (isArabic) {
+    document.body.style.direction = "rtl";
+  } else {
+    document.body.style.direction = "ltr";
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setHeaderState();
+  initLanguageToggle();
   initMenu();
   initActiveNav();
   initCursor();

@@ -88,7 +88,7 @@ canvas {
   left: 0;
   right: 0;
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto auto auto;
   align-items: center;
   gap: 28px;
   padding: 22px var(--page-gutter);
@@ -142,6 +142,40 @@ canvas {
 
 .desktop-nav a.is-active {
   color: var(--acid);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.language-toggle {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.language-toggle:hover {
+  border-color: var(--paper);
+  color: var(--paper);
+  background: var(--panel);
+}
+
+.language-toggle.is-arabic {
+  direction: rtl;
 }
 
 .menu-button {
@@ -1011,12 +1045,15 @@ main,
 
 @media (max-width: 1023px) {
   .site-header {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
   }
 
-  .desktop-nav,
-  .header-link {
+  .desktop-nav {
     display: none;
+  }
+
+  .header-controls {
+    display: flex;
   }
 
   .menu-button {
