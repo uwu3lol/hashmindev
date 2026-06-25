@@ -301,32 +301,47 @@ window.addEventListener("scroll", setHeaderState, { passive: true });
 const STORAGE_KEY = "portfolio-language";
 const DEFAULT_LANG = "en";
 
+function getStoredLanguage() {
+  try {
+    return localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
+  } catch (error) {
+    return DEFAULT_LANG;
+  }
+}
+
+function setStoredLanguage(lang) {
+  try {
+    localStorage.setItem(STORAGE_KEY, lang);
+  } catch (error) {
+    // Private browsing or locked storage should not break language switching.
+  }
+}
+
+function toggleLanguage() {
+  const currentLang = document.documentElement.lang === "ar" ? "ar" : "en";
+  const newLang = currentLang === "en" ? "ar" : "en";
+  setStoredLanguage(newLang);
+  applyLanguage(newLang);
+}
+
 function initLanguageToggle() {
   const languageToggle = qs("#languageToggle");
-  if (!languageToggle) return;
-
-  // Get saved language or use default
-  const savedLang = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
-  
-  // Apply language on load
+  const savedLang = getStoredLanguage();
   applyLanguage(savedLang);
 
-  // Toggle on button click
-  languageToggle.addEventListener("click", () => {
-    const currentLang = document.documentElement.lang === "ar" ? "ar" : "en";
-    const newLang = currentLang === "en" ? "ar" : "en";
-    localStorage.setItem(STORAGE_KEY, newLang);
-    applyLanguage(newLang);
-  });
+  if (languageToggle) {
+    languageToggle.addEventListener("click", toggleLanguage);
+  }
 }
 
 function applyLanguage(lang) {
   const isArabic = lang === "ar";
   const dataAttr = isArabic ? "data-ar" : "data-en";
   const direction = isArabic ? "rtl" : "ltr";
+  const htmlLang = isArabic ? "ar" : "en-AE";
   
   // Set HTML lang and direction
-  document.documentElement.lang = lang;
+  document.documentElement.lang = htmlLang;
   document.documentElement.dir = direction;
   document.body.dir = direction;
 
@@ -335,22 +350,28 @@ function applyLanguage(lang) {
   if (languageToggle) {
     languageToggle.classList.toggle("is-arabic", isArabic);
     languageToggle.textContent = isArabic ? "AR" : "EN";
+    languageToggle.setAttribute("aria-pressed", String(isArabic));
+    languageToggle.setAttribute("aria-label", isArabic ? "Switch language to English" : "Switch language to Arabic");
   }
 
   // Update all elements with data-en and data-ar attributes
   qsa("[data-en]").forEach((el) => {
     const text = el.getAttribute(dataAttr) || el.getAttribute("data-en");
     
-    // For elements with only text content (no child elements with data attributes)
-    if (el.children.length === 0 || (el.children.length === 1 && el.children[0].tagName === "SPAN" && !el.children[0].hasAttribute("data-en"))) {
+    if (el.children.length === 0) {
       el.textContent = text;
     } else if (!el.querySelector("[data-en]")) {
-      // Replace text content but preserve HTML structure
-      Array.from(el.childNodes).forEach((node) => {
-        if (node.nodeType === Node.TEXT_NODE) {
-          node.textContent = text;
-        }
-      });
+      const textTarget = Array.from(el.children).find((child) => child.tagName === "SPAN" && !child.hasAttribute("aria-hidden"));
+
+      if (textTarget) {
+        textTarget.textContent = text;
+      } else {
+        Array.from(el.childNodes).forEach((node) => {
+          if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+            node.textContent = text;
+          }
+        });
+      }
     }
   });
 
@@ -369,13 +390,11 @@ function applyLanguage(lang) {
     }
   }
 
-  // Trigger layout recalculation for RTL
-  if (isArabic) {
-    document.body.style.direction = "rtl";
-  } else {
-    document.body.style.direction = "ltr";
-  }
+  document.body.classList.toggle("is-arabic", isArabic);
 }
+
+window.applyPortfolioLanguage = applyLanguage;
+window.togglePortfolioLanguage = toggleLanguage;
 
 document.addEventListener("DOMContentLoaded", () => {
   setHeaderState();
