@@ -232,11 +232,26 @@ html[dir="rtl"] .availability {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-end;
   gap: 18px;
   padding: 84px 24px 32px;
-  background: rgba(3, 3, 3, 0.96);
+  background: rgba(3, 3, 3, 0.62);
+  backdrop-filter: blur(10px);
   transform: translateX(100%);
   transition: transform 0.35s ease;
+}
+
+.mobile-menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(86vw, 430px);
+  border-left: 1px solid var(--line);
+  background: rgba(3, 3, 3, 0.96);
+  box-shadow: -24px 0 70px rgba(0, 0, 0, 0.36);
+  pointer-events: none;
 }
 
 .mobile-menu.is-open {
@@ -244,8 +259,17 @@ html[dir="rtl"] .availability {
 }
 
 html[dir="rtl"] .mobile-menu {
+  align-items: flex-start;
   transform: translateX(-100%);
   text-align: right;
+}
+
+html[dir="rtl"] .mobile-menu::before {
+  right: auto;
+  left: 0;
+  border-right: 1px solid var(--line);
+  border-left: 0;
+  box-shadow: 24px 0 70px rgba(0, 0, 0, 0.36);
 }
 
 html[dir="rtl"] .mobile-menu.is-open {
@@ -253,12 +277,16 @@ html[dir="rtl"] .mobile-menu.is-open {
 }
 
 .mobile-menu a {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 360px);
   font-family: var(--font-display);
-  font-size: clamp(36px, 12vw, 72px);
+  font-size: clamp(34px, 11vw, 68px);
   font-weight: 800;
-  letter-spacing: -0.06em;
+  letter-spacing: 0;
   line-height: 1;
   padding: 8px 0;
+  overflow-wrap: anywhere;
 }
 
 main,
@@ -320,17 +348,19 @@ main,
 .hero-title {
   margin: 18px 0 0;
   font-family: var(--font-display);
-  font-size: clamp(40px, 8vw, 148px);
+  font-size: clamp(38px, 6.8vw, 118px);
   font-weight: 800;
-  letter-spacing: -0.075em;
+  letter-spacing: 0;
   line-height: 1.12;
   text-transform: uppercase;
   max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .hero-title .name-line {
   position: relative;
-  display: inline-block;
+  display: block;
+  max-width: 100%;
   transition: color 0.28s ease, text-shadow 0.28s ease, transform 0.28s ease;
 }
 
@@ -857,6 +887,22 @@ html[dir="rtl"] .profile-title img {
   padding: clamp(22px, 4vw, 40px);
 }
 
+.testimonial-grid span::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 10px;
+  border-radius: 999px;
+  background: var(--acid);
+  box-shadow: 0 0 18px rgba(214, 255, 54, 0.38);
+}
+
+html[dir="rtl"] .testimonial-grid span::before {
+  margin-right: 0;
+  margin-left: 10px;
+}
+
 .testimonial-grid p {
   margin: 0;
   color: rgba(244, 240, 232, 0.78);
@@ -887,10 +933,32 @@ html[dir="rtl"] .profile-title img {
 }
 
 .skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  margin-top: clamp(34px, 6vw, 70px);
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+.skill-group {
   display: flex;
   flex-wrap: wrap;
+  align-content: start;
   gap: 10px;
-  margin-top: clamp(34px, 6vw, 70px);
+  min-width: 0;
+  padding: clamp(18px, 3vw, 28px);
+  background: #050505;
+}
+
+.skill-group strong {
+  flex-basis: 100%;
+  margin-bottom: 6px;
+  color: var(--acid);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .skills-grid span {
@@ -1001,6 +1069,7 @@ html[dir="rtl"] .profile-title img {
 .contact-form select,
 .contact-form textarea {
   width: 100%;
+  min-height: 52px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background-color: rgba(7, 7, 7, 0.88);
@@ -1048,6 +1117,10 @@ html[dir="rtl"] .contact-form select {
 .form-note {
   margin: 0;
   font-size: 13px;
+}
+
+.privacy-note {
+  color: rgba(244, 240, 232, 0.68);
 }
 
 .site-footer {
@@ -1109,6 +1182,10 @@ html[dir="rtl"] .contact-form select {
     max-width: 560px;
   }
 
+  .hero-title {
+    letter-spacing: 0;
+  }
+
   .project-type,
   .project-arrow {
     grid-column: 2;
@@ -1120,16 +1197,80 @@ html[dir="rtl"] .contact-form select {
 }
 
 @media (max-width: 767px) {
+  :root {
+    --page-gutter: clamp(18px, 5vw, 28px);
+  }
+
+  .site-header {
+    gap: 12px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
   .brand small {
     display: none;
+  }
+
+  .brand span {
+    font-size: 20px;
+  }
+
+  .header-link {
+    display: none;
+  }
+
+  .language-toggle,
+  .menu-button {
+    width: 42px;
+    height: 42px;
   }
 
   .hero {
     padding-top: 96px;
   }
 
+  .hero-meta {
+    gap: 8px;
+  }
+
+  .hero-meta span {
+    max-width: 100%;
+    padding: 8px 10px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-title {
+    font-size: clamp(31px, 9.7vw, 48px);
+    letter-spacing: 0;
+    line-height: 1.12;
+  }
+
+  .hero-surname {
+    font-size: 0.52em;
+    letter-spacing: 0;
+  }
+
+  .hero-text {
+    margin-top: 24px;
+    font-size: clamp(17px, 5vw, 22px);
+  }
+
+  .hero-panel {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .button {
+    width: 100%;
+    min-height: 50px;
+    padding-inline: 16px;
+    text-align: center;
+  }
+
   .profile-title {
     padding-right: 0;
+    line-height: 1.06;
   }
 
   html[dir="rtl"] .profile-title {
@@ -1141,7 +1282,7 @@ html[dir="rtl"] .contact-form select {
     right: auto;
     bottom: auto;
     width: clamp(54px, 18vw, 78px);
-    margin-top: 12px;
+    margin-top: 14px;
   }
 
   html[dir="rtl"] .profile-title img {
@@ -1152,6 +1293,17 @@ html[dir="rtl"] .contact-form select {
 
   .stats-grid div {
     min-height: 136px;
+    padding: 20px;
+  }
+
+  .stats-grid span {
+    letter-spacing: 0.08em;
+  }
+
+  .service-grid,
+  .proof-grid,
+  .testimonial-grid {
+    grid-template-columns: 1fr;
   }
 
   .service-card {
@@ -1160,6 +1312,7 @@ html[dir="rtl"] .contact-form select {
 
   .contact-form {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .hero-bottom {
@@ -1174,8 +1327,54 @@ html[dir="rtl"] .contact-form select {
     gap: 12px;
   }
 
+  .project-name {
+    line-height: 1.06;
+  }
+
+  .skills-grid span {
+    font-size: 14px;
+    padding: 11px 13px;
+  }
+
+  .skill-group {
+    padding: 18px;
+  }
+
   .site-footer {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 420px) {
+  .mobile-menu {
+    padding-inline: 20px;
+  }
+
+  .mobile-menu::before {
+    width: 100%;
+  }
+
+  .mobile-menu a {
+    width: 100%;
+    font-size: clamp(30px, 12vw, 48px);
+  }
+
+  .hero-title {
+    font-size: clamp(30px, 9.6vw, 40px);
+    letter-spacing: 0;
+  }
+
+  .section-title,
+  .manifesto-quote {
+    letter-spacing: 0;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-panel a {
+    padding: 20px;
   }
 }
 

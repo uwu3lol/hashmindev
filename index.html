@@ -129,14 +129,14 @@
     </button>
   </header>
 
-  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation" aria-hidden="true" inert>
     <a href="#profile" data-en="Profile" data-ar="ملف تعريفي">Profile</a>
     <a href="#work" data-en="Work" data-ar="الأعمال">Work</a>
     <a href="#services" data-en="Services" data-ar="الخدمات">Services</a>
     <a href="#skills" data-en="Skills" data-ar="المهارات">Skills</a>
     <a href="#contact" data-en="Contact" data-ar="التواصل">Contact</a>
     <a href="https://api.whatsapp.com/send/?phone=971503391025" target="_blank" rel="noopener noreferrer" data-en="WhatsApp" data-ar="واتس آب">WhatsApp</a>
-  </div>
+  </nav>
 
   <main id="top">
     <section class="hero section-pad">
@@ -202,9 +202,9 @@
         </div>
       </div>
       <div class="stats-grid reveal">
-        <div><strong data-count="20">0</strong><span data-en="Companies served" data-ar="شركة تم خدمتها">Companies served</span></div>
-        <div><strong data-count="50">0</strong><span data-en="Projects delivered" data-ar="مشروعاً تم تسليمه">Projects delivered</span></div>
-        <div><strong data-count="2">0</strong><span data-en="Countries" data-ar="دولتان">Countries</span></div>
+        <div><strong data-count="20">20</strong><span data-en="Companies served" data-ar="شركة تم خدمتها">Companies served</span></div>
+        <div><strong data-count="50">50</strong><span data-en="Projects delivered" data-ar="مشروعاً تم تسليمه">Projects delivered</span></div>
+        <div><strong data-count="2">2</strong><span data-en="Countries" data-ar="دولتان">Countries</span></div>
         <div><strong>24/7</strong><span data-en="Build mode" data-ar="وضع البناء">Build mode</span></div>
       </div>
     </section>
@@ -330,18 +330,27 @@
         <h2 class="section-title" data-en="More than just pixels." data-ar="أكثر من مجرد بكسل.">More than just pixels.</h2>
       </div>
       <div class="skills-grid reveal">
-        <span data-en="Web Design" data-ar="تصميم الويب">Web Design</span>
-        <span data-en="Web Development" data-ar="تطوير الويب">Web Development</span>
-        <span data-en="Prompt Engineering" data-ar="هندسة الأوامر">Prompt Engineering</span>
-        <span data-en="Proofreading" data-ar="التدقيق اللغوي">Proofreading</span>
-        <span data-en="Business Process Automation" data-ar="أتمتة العمليات التجارية">Business Process Automation</span>
-        <span data-en="AI Automation Literacy" data-ar="محو الأمية في أتمتة الذكاء الاصطناعي">AI Automation Literacy</span>
-        <span data-en="AI Agents: paid and free tools" data-ar="وكلاء الذكاء الاصطناعي: أدوات مدفوعة ومجانية">AI Agents: paid and free tools</span>
-        <span data-en="Workflow Optimization" data-ar="تحسين سير العمل">Workflow Optimization</span>
-        <span data-en="Digital Literacy" data-ar="محو الأمية الرقمية">Digital Literacy</span>
-        <span data-en="Content Systems" data-ar="أنظمة المحتوى">Content Systems</span>
-        <span data-en="Local SEO" data-ar="تحسين محركات البحث المحلية">Local SEO</span>
-        <span data-en="Brand Direction" data-ar="اتجاه العلامة التجارية">Brand Direction</span>
+        <div class="skill-group">
+          <strong data-en="Web Development" data-ar="تطوير الويب">Web Development</strong>
+          <span data-en="Web Design" data-ar="تصميم الويب">Web Design</span>
+          <span data-en="Web Development" data-ar="تطوير الويب">Web Development</span>
+          <span data-en="Local SEO" data-ar="تحسين محركات البحث المحلية">Local SEO</span>
+        </div>
+        <div class="skill-group">
+          <strong data-en="AI & Automation" data-ar="الذكاء الاصطناعي والأتمتة">AI & Automation</strong>
+          <span data-en="Prompt Engineering" data-ar="هندسة الأوامر">Prompt Engineering</span>
+          <span data-en="Business Process Automation" data-ar="أتمتة العمليات التجارية">Business Process Automation</span>
+          <span data-en="AI Agents: paid and free tools" data-ar="وكلاء الذكاء الاصطناعي: أدوات مدفوعة ومجانية">AI Agents: paid and free tools</span>
+          <span data-en="Workflow Optimization" data-ar="تحسين سير العمل">Workflow Optimization</span>
+        </div>
+        <div class="skill-group">
+          <strong data-en="Content & Brand" data-ar="المحتوى والعلامة">Content & Brand</strong>
+          <span data-en="Content Systems" data-ar="أنظمة المحتوى">Content Systems</span>
+          <span data-en="Brand Direction" data-ar="اتجاه العلامة التجارية">Brand Direction</span>
+          <span data-en="Proofreading" data-ar="التدقيق اللغوي">Proofreading</span>
+          <span data-en="Digital Literacy" data-ar="محو الأمية الرقمية">Digital Literacy</span>
+          <span data-en="AI Automation Literacy" data-ar="محو الأمية في أتمتة الذكاء الاصطناعي">AI Automation Literacy</span>
+        </div>
       </div>
     </section>
 
@@ -373,7 +382,7 @@
           <strong>@7a3hmy_</strong>
         </a>
       </div>
-      <form class="contact-form reveal" id="contactForm">
+      <form class="contact-form reveal" id="contactForm" aria-describedby="formNote privacyNote">
         <label>
           <span data-en="Name" data-ar="الاسم">Name</span>
           <input type="text" name="name" autocomplete="name" required>
@@ -408,6 +417,7 @@
         </label>
         <button class="button button-solid" type="submit" data-en="Draft WhatsApp Brief" data-ar="جهز ملخص واتس آب">Draft WhatsApp Brief</button>
         <p class="form-note" id="formNote" data-en="The form opens WhatsApp with a ready project brief. Email is available above for longer notes." data-ar="يفتح النموذج واتس آب مع ملخص مشروع جاهز. البريد الإلكتروني متاح أعلاه للملاحظات الأطول.">The form opens WhatsApp with a ready project brief. Email is available above for longer notes.</p>
+        <p class="form-note privacy-note" id="privacyNote" data-en="Your details are only used to reply to this enquiry and are not added to a mailing list." data-ar="تُستخدم تفاصيلك فقط للرد على هذا الاستفسار ولا تتم إضافتها إلى قائمة بريدية.">Your details are only used to reply to this enquiry and are not added to a mailing list.</p>
       </form>
     </section>
   </main>

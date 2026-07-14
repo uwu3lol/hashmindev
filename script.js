@@ -45,6 +45,7 @@ function toggleMenu(force) {
   menuButton.classList.toggle("is-open", isOpen);
   menuButton.setAttribute("aria-expanded", String(isOpen));
   mobileMenu.setAttribute("aria-hidden", String(!isOpen));
+  mobileMenu.toggleAttribute("inert", !isOpen);
   document.body.classList.toggle("menu-open", isOpen);
   main?.toggleAttribute("inert", isOpen);
   footer?.toggleAttribute("inert", isOpen);
